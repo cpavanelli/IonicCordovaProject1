@@ -66,6 +66,10 @@ angular.module('starter.services', [])
       remove: function (restaurante) {
           restaurantes.splice(restaurantes.indexOf(restaurante), 1);
       },
+      add: function (restaurante) {
+          restaurante.id = 5;
+          restaurantes.push(restaurante);
+      },
       get: function (restauranteId) {
           for (var i = 0; i < restaurantes.length; i++) {
               if (restaurantes[i].id === parseInt(restauranteId)) {
