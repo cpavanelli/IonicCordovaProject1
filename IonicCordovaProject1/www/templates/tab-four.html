@@ -1,0 +1,21 @@
+<ion-view view-title="Restaurantes">
+  <ion-content>
+      <ion-list>
+          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="restaurante in restaurantes" type="item-text-wrap"  href="#/tab/restaurante/{{restaurante.id}}">
+              <!--<img ng-src="{{chat.face}}">-->
+              <h2>{{restaurante.nome}}</h2>
+              <p>{{restaurante.cozinha}}</p>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+
+              <ion-option-button class="button-assertive" ng-click="remove(restaurante)">
+                  Delete
+              </ion-option-button>
+          </ion-item>
+      </ion-list>
+  </ion-content>
+    <a href="#/tab/addRestaurante">
+        <div class="bar bar-footer bar-balanced">
+            <div class="title">Novo</div>
+        </div>
+    </a>
+</ion-view>
