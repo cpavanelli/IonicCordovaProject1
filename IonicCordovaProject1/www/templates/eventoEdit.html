@@ -1,0 +1,22 @@
+
+<ion-view view-title="{{evento.nome}}" >
+  <ion-content class="padding">
+      <form name="form" ng-model="evento">
+          <ion-list>
+              <li class="item item-input item-stacked-label">
+                  <span class="input-label">Nome</span>
+
+                  <input type="text" placeholder="" name="description" ng-model="evento.nome" required />
+              </li>
+              <li class="item item-input item-stacked-label">
+                  <span class="input-label">Data</span>
+                  <input type="text" placeholder="" name="description" ng-model="evento.data" required />
+              </li>
+             
+              <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(evento)">
+                  Add
+              </ion-button>
+          </ion-list>
+      </form>
+  </ion-content>
+</ion-view>

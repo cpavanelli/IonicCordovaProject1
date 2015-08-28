@@ -88,8 +88,88 @@ angular.module('starter.services', [])
         }
 
     };
+})
 
 
+.factory('EventoFactory', function () {
+    var eventos = [
+                { nome: 'Orquestra X', id: 1, data: "01/01/2015" },
+                { nome: 'Evento Y', id: 2, data: "02/01/2014" },
+                { nome: 'Show B', id: 3, data: "03/01/2013" },
+                { nome: 'Etc 1235', id: 4, data: "01/01/2010" }
+    ];
+
+    function getNewId() {
+        var highest = 0;
+        jQuery.each(eventos, function (index, element) {
+            if (eventos[index].id > highest)
+                highest = eventos[index].id;
+        });
+        return highest + 1;
+    }
+
+    return {
+        getAll: function () {
+            return eventos;
+        },
+        remove: function (evento) {
+            eventos.splice(eventos.indexOf(evento), 1);
+        },
+        add: function (evento) {
+            evento.id = getNewId();
+            eventos.push(evento);
+        },
+        get: function (eventoId) {
+            for (var i = 0; i < eventos.length; i++) {
+                if (eventos[i].id === parseInt(eventoId)) {
+                    return eventos[i];
+                }
+            }
+            return null;
+        }
+
+    };
+})
+
+
+.factory('MediaFactory', function () {
+    var medias = [
+                { nome: 'Filme 1', id: 1, tipo: "Filme" },
+                { nome: 'Filme 2', id: 2, tipo: "Serie" },
+                { nome: 'Filme 3', id: 3, tipo: "Filme" },
+                { nome: 'Filme 4', id: 4, tipo: "Filme" }
+    ];
+
+    function getNewId() {
+        var highest = 0;
+        jQuery.each(medias, function (index, element) {
+            if (medias[index].id > highest)
+                highest = medias[index].id;
+        });
+        return highest + 1;
+    }
+
+    return {
+        getAll: function () {
+            return medias;
+        },
+        remove: function (media) {
+            medias.splice(medias.indexOf(media), 1);
+        },
+        add: function (media) {
+            media.id = getNewId();
+            medias.push(media);
+        },
+        get: function (mediaId) {
+            for (var i = 0; i < medias.length; i++) {
+                if (medias[i].id === parseInt(mediaId)) {
+                    return medias[i];
+                }
+            }
+            return null;
+        }
+
+    };
 })
 
 ;

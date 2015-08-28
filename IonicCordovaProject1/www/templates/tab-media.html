@@ -1,0 +1,21 @@
+<ion-view view-title="Media">
+  <ion-content>
+      <ion-list>
+          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="media in medias" type="item-text-wrap"  href="#/tab/media/{{media.id}}">
+              <!--<img ng-src="{{chat.face}}">-->
+              <h2>{{media.nome}}</h2>
+              <p>{{media.tipo}}</p>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+
+              <ion-option-button class="button-assertive" ng-click="remove(media)">
+                  Delete
+              </ion-option-button>
+          </ion-item>
+      </ion-list>
+  </ion-content>
+    <a href="#/tab/media/0">
+        <div class="bar bar-footer bar-balanced">
+            <div class="title">Novo</div>
+        </div>
+    </a>
+</ion-view>

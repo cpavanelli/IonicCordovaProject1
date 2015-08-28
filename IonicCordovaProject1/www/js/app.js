@@ -21,6 +21,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     });
 })
 
+//.config(['$ionicConfigProvider', function ($ionicConfigProvider) {
+
+//    $ionicConfigProvider.tabs.position('bottom'); // other values: top
+
+//}])
+
+
 .config(function ($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -83,6 +90,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
               'tab-four': {
                   templateUrl: 'templates/restauranteEdit.html',
                   controller: 'RestauranteEditCtrl'
+              }
+          }
+      })
+
+              .state('tab.media', {
+                  url: '/media',
+                  views: {
+                      'tab-media': {
+                          templateUrl: 'templates/tab-media.html',
+                          controller: 'MediaCtrl'
+                      }
+                  }
+              })
+
+      .state('tab.mediaEdit', {
+          url: '/media/:mediaId',
+          views: {
+              'tab-media': {
+                  templateUrl: 'templates/mediaEdit.html',
+                  controller: 'MediaEditCtrl'
+              }
+          }
+      })
+
+              .state('tab.evento', {
+                  url: '/evento',
+                  views: {
+                      'tab-evento': {
+                          templateUrl: 'templates/tab-evento.html',
+                          controller: 'EventoCtrl'
+                      }
+                  }
+              })
+
+      .state('tab.eventoEdit', {
+          url: '/evento/:eventoId',
+          views: {
+              'tab-evento': {
+                  templateUrl: 'templates/eventoEdit.html',
+                  controller: 'EventoEditCtrl'
               }
           }
       })
