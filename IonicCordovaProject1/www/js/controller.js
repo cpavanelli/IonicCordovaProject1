@@ -1,110 +1,116 @@
 angular.module('starter.controllers')
 
-    .controller('FourCtrl', function ($scope, $ionicPopup, $stateParams, FourFactory) {
+    .controller('FourCtrl', function ($scope, $ionicModal, $stateParams, FourFactory) {
 
         $scope.myFilter = null;
         $scope.popUpFilter = null;
+        $scope.filterCozinha = null;
+        $scope.filterNome = null;
 
-
-        $scope.teste = 'aaaaaa';
-
+        $scope.restaurantes = FourFactory.getAll();
+        $scope.cozinhas = FourFactory.getCozinhas();
 
         $scope.openFilter = function () {
             if ($('#filtersDiv').css('display') == 'block') {
                 $('#filtersDiv').css('display', 'none');
             }
-            else
-            {
+            else {
                 $('#filtersDiv').css('display', 'block');
             }
-            
-            //$scope.modal.show($event);
         };
-        $scope.closePopover = function () {
-            $scope.modal.hide();
-        };
-
-
-        $scope.restaurantes = FourFactory.getAll();
 
         $scope.remove = function (restaurante) {
             FourFactory.remove(restaurante);
         };
 
-        $scope.filterData = function () {
-            closePopover();
-            alert();
-            FourFactory.filterData(null);
-            
+        // Filters Modal Code
+        $ionicModal.fromTemplateUrl('templates/restauranteFilter.html', {
+            scope: $scope,
+            animation: 'slide-in-right',
+            cssClass: 'customPopup'
+        }).then(function (modal) { $scope.modal = modal; });
+
+        $scope.openModal = function () {
+            $scope.modal.show().then(function () {
+                if ($scope.filterCozinha == null)
+                    $scope.filterCozinha = $scope.cozinhas[0];
+            });
         };
 
+        $scope.closeModal = function () {
+            $scope.modal.hide();
+        };
 
-        //$ionicModal.fromTemplateUrl('templates/restauranteFilter.html', {
-        //    scope: $scope,
-        //    animation: 'slide-in-up'
-        //}).then(function (modal) {
-        //    $scope.modal = modal;
-        //});
+        $scope.applyFilters = function () {
+            $scope.popUpFilter = { cozinha: $scope.filterCozinha.id, nome: $scope.filterNome };
+
+            if ($scope.popUpFilter.cozinha == null) {
+                delete $scope.popUpFilter.cozinha;
+            }
+
+            if ($scope.popUpFilter.nome == null) {
+                delete $scope.popUpFilter.nome;
+            }
 
 
-        //new popup code
+            if ($scope.popUpFilter != null && $scope.popUpFilter.cozinha == null && $scope.popUpFilter.nome == null)
+                $scope.popUpFilter = null;
 
-        
-        $scope.contactMessage = { text: "text" }
-        
-        $scope.showPopup = function () {
-            $scope.data = {}
-            $scope.ctrl = this;
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                templateUrl: 'templates/restauranteFilter.html',
-                scope: $scope,
-                cssClass: 'customPopup',
-                buttons: [
-                  {
-                      text: 'Cancel',
-                      onTap: function (e) {
-                          alert($scope.contactMessage.text);
-                          return 'cancel button';
-                      }
-                  },
-                  {
-                      text: '<b>Ok</b>',
-                      type: 'button-positive',
-                      onTap: function (e) {
-                          //alert($scope.contactMessage.text);
-                          
-                          //$scope.myFilter = null;
+            $scope.updateFilter($scope.popUpFilter);
 
-                          //if ($scope.popUpFilter != null) {
-                          //    //$scope.myFilter = { cozinha: 'Japones' };
-                          //    $scope.popUpFilter = { cozinha: 'Japones' };
-                          //}
-                          //else {
-                          //    //$scope.myFilter = { cozinha: 'Burger' };
-                          //    $scope.popUpFilter = { cozinha: 'Burger' };
-                          //}
-                          $scope.popUpFilter = { cozinha: $scope.contactMessage.text };
-                          
-                          
-                          $scope.updateFilter($scope.popUpFilter);
-                          
-                          return 'ok button';
-                      }
-                  },
-                ]
-            });
-            myPopup.then(function (res) {
-                //alert("you tapped: " + res);
-                
-            });
+            $scope.closeModal();
+
         };
 
         $scope.updateFilter = function (_updateFilter) {
             $scope.myFilter = _updateFilter;
         }
 
-        //end new code
+        // Filters ON CHANGE
+        $scope.cozinhaChange = function (_cozinha) {
+            $scope.filterCozinha = _cozinha;
+        };
+
+        $scope.nomeChange = function (_nome) {
+            if (_nome == '')
+                $scope.filterNome = null;
+            else
+                $scope.filterNome = _nome;
+        };
+
+        //$scope.showPopup = function () {
+        //    $scope.data = {}
+        //    $scope.ctrl = this;
+        //    // An elaborate, custom popup
+        //    var myPopup = $ionicPopup.show({
+        //        templateUrl: 'templates/restauranteFilter.html',
+        //        scope: $scope,
+        //        cssClass: 'customPopup',
+        //        buttons: [
+        //          {
+        //              text: 'Cancel',
+        //              onTap: function (e) {alert($scope.contactMessage.text);return 'cancel button';}
+        //          },
+        //          {
+        //              text: '<b>Ok</b>',
+        //              type: 'button-positive',
+        //              onTap: function (e) { $scope.updateFilterTap(); return 'ok button'; }
+        //          }
+        //        ]
+        //    });
+        //    myPopup.then(function (res) {
+        //        //alert("you tapped: " + res); 
+        //    });
+        //};
+
+        //$scope.updateFilterTap = function () {
+        //    $scope.popUpFilter = { cozinha: $scope.contactMessage.text };
+
+
+        //    $scope.updateFilter($scope.popUpFilter);
+        //}
+
+        //new popover code
 
 
 
@@ -113,25 +119,28 @@ angular.module('starter.controllers')
 
     .controller('RestauranteEditCtrl', function ($scope, $state, $stateParams, FourFactory) {
         var id = $stateParams.restauranteId;
+        $scope.cozinhas = FourFactory.getCozinhas();
+        
+
 
         if (id == 0)
             $scope.action = 'add';
         else {
             $scope.action = 'change';
             $scope.restaurante = FourFactory.get(id);
+            $scope.restaurante.cozinhaObj = FourFactory.getCozinha($scope.restaurante.cozinha);
         }
-        
-        $scope.addItem = function (restaurante) {
-            
-            var newItem = {};
 
-            //newItem.nome = restaurante.nome;
-            //newItem.cozinha = restaurante.cozinha;
-            //newItem.visitado = restaurante.visitado;
+        $scope.addItem = function (restaurante) {        
             
+            restaurante.cozinha = restaurante.cozinhaObj.id;
             FourFactory.add(restaurante);
-            
+
             $state.go('tab.four');
+        };
+
+        $scope.cozinhaChange = function (_cozinha) {
+            $scope.restaurante.cozinha = _cozinha.id;
         };
 
     })
@@ -202,6 +211,14 @@ angular.module('starter.controllers')
         };
 
     })
-
-
 ;
+
+//$('.backdrop').addClass('visible');
+//$('.backdrop').addClass('active');
+//$('.backdrop').css('z-index', '10');
+
+//$('.modal-backdrop').addClass('backdrop');
+//$('.modal-backdrop').addClass('active');
+
+//$scope.$on('modal.hidden', function () {
+//});

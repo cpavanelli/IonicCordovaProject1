@@ -1,12 +1,6 @@
-
 <ion-view view-title="{{restaurante.nome}}" >
   <ion-content class="padding">
-    <!--<img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{chat.lastText}}
-    </p>-->
-      
-
+  
       <form name="form" ng-model="restaurante">
           <ion-list>
               <li class="item item-input item-stacked-label">
@@ -16,20 +10,15 @@
               </li>
               <li class="item item-input item-stacked-label">
                   <span class="input-label">Cozinha</span>
-                  <input type="text" placeholder="" name="description" ng-model="restaurante.cozinha" required />
+                  <!--<input type="text" placeholder="" name="description" ng-model="restaurante.cozinha" required />-->
+                  <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas" ng-change="cozinhaChange(restaurante.cozinhaObj)"></select>
               </li>
               
                   <ion-toggle ng-model="restaurante.visitado" toggle-class="toggle-calm">Visitado</ion-toggle>
               
-              
-             
               <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
-                  Add
+                  Adicionar
               </ion-button>
-              <!--<button  ng-show="action == 'add'" class="button button-block button-positive" type="submit">Save</button>-->
-              <!--<ion-button ng-show="action == 'change'" class="button button-block button-positive" ng-click="editItem(form)">
-                  Edit
-              </ion-button>-->
           </ion-list>
       </form>
   </ion-content>

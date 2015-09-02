@@ -1,3 +1,14 @@
-﻿
-    <input type="text" ng-model="contactMessage.text" name="message">
-    {{contactMessage.text}}
+<div class="backdrop visible active" style="z-index:10;" ng-click="closeModal()"></div>
+
+<ion-modal-view style="left: 45%; ">
+    <ion-header-bar>
+        <h1 class="title">Filtros</h1>
+    </ion-header-bar>
+    <ion-content>
+        <p>Cozinha:<select ng-model="filterCozinha" data-ng-options="item.nome for item in cozinhas" ng-change="cozinhaChange(filterCozinha);"></select></p>
+        
+            Nome:<input type="text" ng-model="filterNome" name="Nome" ng-change="nomeChange(filterNome);">
+
+            <button class="button button-positive" ng-click="applyFilters()">Aplicar</button>
+</ion-content>
+</ion-modal-view>

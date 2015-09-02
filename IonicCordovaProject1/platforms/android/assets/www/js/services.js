@@ -50,13 +50,120 @@ angular.module('starter.services', [])
 })
 
 
-.factory('FourFactory', function () {
+.factory('FourFactory', function ($http) {
     var restaurantes = [
-                { nome: 'um', id: 1, cozinha: "Burger", visitado : true },
-                { nome: 'dois', id: 2, cozinha: "Japones", visitado : false },
-                { nome: 'tres', id: 3, cozinha: "Italiano", visitado : false },
-                { nome: 'quatro', id: 4, cozinha: "Burger", visitado : false }
+                { nome: 'um', id: 1, cozinha: "Burger", visitado: true },
+                { nome: 'dois', id: 2, cozinha: "Japonesa", visitado: false },
+                { nome: 'tres', id: 3, cozinha: "Italiana", visitado: false },
+                { nome: 'quatro', id: 4, cozinha: "Burger", visitado: false }
     ];
+
+
+    var cozinhas = [
+            {nome: 'Todas', id: null},
+            { nome: 'Arabe', id: 'Arabe' },
+            { nome: 'Burger', id: 'Burger' },
+            { nome: 'Chinesa', id: 'Chinesa' },
+            { nome: 'Doces e Salgados', id: 'Doces e Salgados' },
+            { nome: 'Italiana', id: 'Italiana' },
+            { nome: 'Japonesa', id: 'Japonesa' },
+            { nome: 'Indiana', id: 'Indiana' },
+            { nome: 'Vegetariana', id: 'Vegetariana' },
+            { nome: 'Variada', id: 'Variada' }
+    ];
+
+
+
+
+   // var cozinhas = ['Todas', 'Arabe', 'Burger', 'Chinesa', 'Doces e Salgados', 'Italiana', 'Japonesa', 'Indiana', 'Vegetariana', 'Variada'];
+
+
+    //var server = "http://localhost:6392/";
+    //var server = "http://micaapp.azurewebsites.net/";
+    //WCFJSON();
+
+
+    //var testeDoido = $http.get(server + "Service1.svc/GetDate");
+
+    //$.ajax( server + "Service1.svc/GetDate", {
+    //    success: function (data) {
+    //        alert(data);
+    //    },
+    //    error: function () {
+
+    //    },
+    //    processData: false,
+    //    crossDomain: true
+    //});
+
+    //$.post(server +  + "Service1.svc/GetData", { value: "hello"},
+    //    function (returnedData) {
+    //        alert(returnedData);
+    //    }
+    //    );
+
+    //content-type = application/soap+xml; charset=utf-8
+
+    //$.ajax(server + "Service1.svc/GetDate", {
+    //        success: function (data) {
+    //            alert(data);
+    //        },
+    //        contentType: "application/soap+xml; charset=utf-8"
+    //});
+
+
+    //$.ajax({
+    //    type: "GET",
+
+    //    //url: server + "Service1.svc/GetDate",
+    //    url: server+"WebService1.asmx/HelloWorld",
+    //    //contentType: "application/json; charset=utf-8",
+    //    success: function (data) {
+    //        alert(data);
+    //    }
+    //});
+
+
+
+
+    //var Type;
+    //var Url;
+    //var Data;
+    //var ContentType;
+    //var DataType;
+    //var ProcessData;
+
+
+    //function WCFJSON() {
+    //    var userid = "1";
+    //    Type = "POST";
+    //    Url = server+ "Service1.svc/GetUser";
+    //    Data = '{"Id": "' + userid + '"}';
+    //    ContentType = "application/json; charset=utf-8";
+    //    DataType = "json"; varProcessData = true;
+    //    CallService();
+    //}
+
+    //// Function to call WCF  Service       
+    //function CallService() {
+    //    $.ajax({
+    //        type: Type, //GET or POST or PUT or DELETE verb
+    //        url: Url, // Location of the service
+    //        data: Data, //Data sent to server
+    //        contentType: ContentType, // content type sent to server
+    //        dataType: DataType, //Expected data format from server
+    //        processdata: ProcessData, //True or False
+    //        crossDomain: true,
+    //        success: function (msg) {//On Successfull service call
+    //            alert(msg);
+    //        },
+    //        error: function (msg) {
+    //            alert('erro');
+    //        }// When Service call fails
+    //    });
+    //}
+
+
 
     function getNewId() {
         var highest = 0;
@@ -82,6 +189,17 @@ angular.module('starter.services', [])
             for (var i = 0; i < restaurantes.length; i++) {
                 if (restaurantes[i].id === parseInt(restauranteId)) {
                     return restaurantes[i];
+                }
+            }
+            return null;
+        },
+        getCozinhas: function () {
+            return cozinhas;
+        },
+        getCozinha: function (nome) {
+            for (var i = 0; i < cozinhas.length; i++) {
+                if (cozinhas[i].id === nome) {
+                    return cozinhas[i];
                 }
             }
             return null;
