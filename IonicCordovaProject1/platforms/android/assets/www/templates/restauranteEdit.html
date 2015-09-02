@@ -18,6 +18,10 @@
                   <span class="input-label">Cozinha</span>
                   <input type="text" placeholder="" name="description" ng-model="restaurante.cozinha" required />
               </li>
+              
+                  <ion-toggle ng-model="restaurante.visitado" toggle-class="toggle-calm">Visitado</ion-toggle>
+              
+              
              
               <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
                   Add

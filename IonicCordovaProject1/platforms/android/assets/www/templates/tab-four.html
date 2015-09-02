@@ -1,19 +1,36 @@
 <ion-view view-title="Restaurantes">
-  <ion-content>
-      
-      <ion-list>
-          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="restaurante in restaurantes" type="item-text-wrap"  href="#/tab/restaurante/{{restaurante.id}}">
-              <!--<img ng-src="{{chat.face}}">-->
-              <h2>{{restaurante.nome}}</h2>
-              <p>{{restaurante.cozinha}}</p>
-              <i class="icon ion-chevron-right icon-accessory"></i>
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="openFilter()">Filters</button>
+        <button class="button" ng-click="showPopup()">Popup</button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div id="filtersDiv" style="display:none;">
+            <p>
+                Cozinha:
+                <span ng-click="myFilter = null">Todos</span> |
+                <span ng-click="myFilter = {cozinha: 'Japones'}">Japones</span> |
+                <span ng-click="myFilter = {cozinha: 'Burger'}">Hamburger</span>
+            </p>
+            <p>
+                Visitados:
+                <span ng-click="myFilter = null">Todos</span> |
+                <span ng-click="myFilter = {visitado: true}">Sim</span> |
+                <span ng-click="myFilter = {visitado: false}">Nao</span>
+            </p>
+        </div>
+        <ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="restaurante in restaurantes | filter:myFilter" type="item-text-wrap" href="#/tab/restaurante/{{restaurante.id}}">
+                <h2>{{restaurante.nome}}</h2>
+                <p>{{restaurante.cozinha}}</p>
+                <div class="ion-ios-checkmark-empty" ng-show="restaurante.visitado"></div>
+                <i class="icon ion-chevron-right icon-accessory"></i>
 
-              <ion-option-button class="button-assertive" ng-click="remove(restaurante)">
-                  Delete
-              </ion-option-button>
-          </ion-item>
-      </ion-list>
-  </ion-content>
+                <ion-option-button class="button-assertive" ng-click="remove(restaurante)">
+                    Delete
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
     <a href="#/tab/restaurante/0">
         <div class="bar bar-footer bar-balanced">
             <div class="title">Novo</div>

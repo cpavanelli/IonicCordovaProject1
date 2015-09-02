@@ -52,10 +52,10 @@ angular.module('starter.services', [])
 
 .factory('FourFactory', function () {
     var restaurantes = [
-                { nome: 'um', id: 1, cozinha: "Burger" },
-                { nome: 'dois', id: 2, cozinha: "Japones" },
-                { nome: 'tres', id: 3, cozinha: "Italiano" },
-                { nome: 'quatro', id: 4, cozinha: "Burger" }
+                { nome: 'um', id: 1, cozinha: "Burger", visitado : true },
+                { nome: 'dois', id: 2, cozinha: "Japones", visitado : false },
+                { nome: 'tres', id: 3, cozinha: "Italiano", visitado : false },
+                { nome: 'quatro', id: 4, cozinha: "Burger", visitado : false }
     ];
 
     function getNewId() {
