@@ -1,66 +1,13 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function () {
-    // Might use a resource here that returns a JSON array
-
-    // Some fake testing data
-    var chats = [{
-        id: 0,
-        name: 'Ben Sparrow',
-        lastText: 'You on your way?',
-        face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-    }, {
-        id: 1,
-        name: 'Max Lynx',
-        lastText: 'Hey, it\'s me',
-        face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-    }, {
-        id: 2,
-        name: 'Andrew Jostlin',
-        lastText: 'Did you get the ice cream?',
-        face: 'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
-    }, {
-        id: 3,
-        name: 'Adam Bradleyson',
-        lastText: 'I should buy a boat',
-        face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-    }, {
-        id: 4,
-        name: 'Perry Governor',
-        lastText: 'Look at my mukluks!',
-        face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-    }];
-
-    return {
-        all: function () {
-            return chats;
-        },
-        remove: function (chat) {
-            chats.splice(chats.indexOf(chat), 1);
-        },
-        get: function (chatId) {
-            for (var i = 0; i < chats.length; i++) {
-                if (chats[i].id === parseInt(chatId)) {
-                    return chats[i];
-                }
-            }
-            return null;
-        }
-    };
-})
-
-
-.factory('FourFactory', function ($http) {
-    var restaurantes = [
-                { nome: 'um', id: 1, cozinha: "Burger", visitado: true },
-                { nome: 'dois', id: 2, cozinha: "Japonesa", visitado: false },
-                { nome: 'tres', id: 3, cozinha: "Italiana", visitado: false },
-                { nome: 'quatro', id: 4, cozinha: "Burger", visitado: false }
-    ];
-
+.factory('FourFactory', function ($http, $timeout, $q) {
+    //var server = "http://localhost:1637/";
+    var server = "http://micawcf.azurewebsites.net/";
+    //var server = "http://testeapp2.azurewebsites.net/";
+    var restaurantes = [{ Nome: 'Carregando...' }];
 
     var cozinhas = [
-            {nome: 'Todas', id: null},
+            { nome: 'Todas', id: null },
             { nome: 'Arabe', id: 'Arabe' },
             { nome: 'Burger', id: 'Burger' },
             { nome: 'Chinesa', id: 'Chinesa' },
@@ -72,122 +19,59 @@ angular.module('starter.services', [])
             { nome: 'Variada', id: 'Variada' }
     ];
 
-
-
-
-   // var cozinhas = ['Todas', 'Arabe', 'Burger', 'Chinesa', 'Doces e Salgados', 'Italiana', 'Japonesa', 'Indiana', 'Vegetariana', 'Variada'];
-
-
-    //var server = "http://localhost:6392/";
-    //var server = "http://micaapp.azurewebsites.net/";
-    //WCFJSON();
-
-
-    //var testeDoido = $http.get(server + "Service1.svc/GetDate");
-
-    //$.ajax( server + "Service1.svc/GetDate", {
-    //    success: function (data) {
-    //        alert(data);
-    //    },
-    //    error: function () {
-
-    //    },
-    //    processData: false,
-    //    crossDomain: true
-    //});
-
-    //$.post(server +  + "Service1.svc/GetData", { value: "hello"},
-    //    function (returnedData) {
-    //        alert(returnedData);
-    //    }
-    //    );
-
-    //content-type = application/soap+xml; charset=utf-8
-
-    //$.ajax(server + "Service1.svc/GetDate", {
-    //        success: function (data) {
-    //            alert(data);
-    //        },
-    //        contentType: "application/soap+xml; charset=utf-8"
-    //});
-
-
-    //$.ajax({
-    //    type: "GET",
-
-    //    //url: server + "Service1.svc/GetDate",
-    //    url: server+"WebService1.asmx/HelloWorld",
-    //    //contentType: "application/json; charset=utf-8",
-    //    success: function (data) {
-    //        alert(data);
-    //    }
-    //});
-
-
-
-
-    //var Type;
-    //var Url;
-    //var Data;
-    //var ContentType;
-    //var DataType;
-    //var ProcessData;
-
-
-    //function WCFJSON() {
-    //    var userid = "1";
-    //    Type = "POST";
-    //    Url = server+ "Service1.svc/GetUser";
-    //    Data = '{"Id": "' + userid + '"}';
-    //    ContentType = "application/json; charset=utf-8";
-    //    DataType = "json"; varProcessData = true;
-    //    CallService();
-    //}
-
-    //// Function to call WCF  Service       
-    //function CallService() {
-    //    $.ajax({
-    //        type: Type, //GET or POST or PUT or DELETE verb
-    //        url: Url, // Location of the service
-    //        data: Data, //Data sent to server
-    //        contentType: ContentType, // content type sent to server
-    //        dataType: DataType, //Expected data format from server
-    //        processdata: ProcessData, //True or False
-    //        crossDomain: true,
-    //        success: function (msg) {//On Successfull service call
-    //            alert(msg);
-    //        },
-    //        error: function (msg) {
-    //            alert('erro');
-    //        }// When Service call fails
-    //    });
-    //}
-
-
-
-    function getNewId() {
-        var highest = 0;
-        jQuery.each(restaurantes, function (index, element) {
-            if (restaurantes[index].id > highest)
-                highest = restaurantes[index].id;
-        });
-        return highest + 1;
-    }
-
     return {
         getAll: function () {
-            return restaurantes;
+            return $http.get(server + "MicaService.svc/Restaurantes")
+                  .then(function (result) {
+                      restaurantes = result.data
+                      return restaurantes;
+                  });
         },
         remove: function (restaurante) {
             restaurantes.splice(restaurantes.indexOf(restaurante), 1);
+
+            $.ajax({
+                type: "POST",
+                url: server + "MicaService.svc/DeleteRestaurante",
+                data: JSON.stringify(restaurante),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                processData: true
+            });
         },
         add: function (restaurante) {
-            restaurante.id = getNewId();
-            restaurantes.push(restaurante);
+
+            $.ajax({
+                type: "POST",
+                url: server + "MicaService.svc/SaveRestaurante/0",
+                data: JSON.stringify(restaurante),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                processData: true,
+                success: function (data, status, jqXHR) {
+                    restaurante.ID = data;
+                    restaurantes.push(restaurante);
+                }
+            });
+        },
+        update: function (restaurante) {
+
+            $.ajax({
+                type: "POST",
+                url: server + "MicaService.svc/SaveRestaurante/0",
+                data: JSON.stringify(restaurante),
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                processData: true,
+                success: function (data, status, jqXHR) {
+                }
+            });
         },
         get: function (restauranteId) {
             for (var i = 0; i < restaurantes.length; i++) {
-                if (restaurantes[i].id === parseInt(restauranteId)) {
+                if (restaurantes[i].ID === parseInt(restauranteId)) {
                     return restaurantes[i];
                 }
             }
@@ -291,3 +175,5 @@ angular.module('starter.services', [])
 })
 
 ;
+
+

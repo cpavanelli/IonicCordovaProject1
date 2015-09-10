@@ -1,25 +1,40 @@
-<ion-view view-title="{{restaurante.nome}}" >
-  <ion-content class="padding">
-  
-      <form name="form" ng-model="restaurante">
-          <ion-list>
-              <li class="item item-input item-stacked-label">
-                  <span class="input-label">Nome</span>
+<ion-view view-title="{{restaurante.Nome}}">
+    <ion-content class="padding">
 
-                  <input type="text" placeholder="" name="description" ng-model="restaurante.nome" required />
-              </li>
-              <li class="item item-input item-stacked-label">
-                  <span class="input-label">Cozinha</span>
-                  <!--<input type="text" placeholder="" name="description" ng-model="restaurante.cozinha" required />-->
-                  <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas" ng-change="cozinhaChange(restaurante.cozinhaObj)"></select>
-              </li>
-              
-                  <ion-toggle ng-model="restaurante.visitado" toggle-class="toggle-calm">Visitado</ion-toggle>
-              
-              <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
-                  Adicionar
-              </ion-button>
-          </ion-list>
-      </form>
-  </ion-content>
+        <form name="form" ng-model="restaurante">
+            <ion-list>
+                <li class="item item-input item-stacked-label">
+                    <span class="input-label">Nome</span>
+
+                    <input type="text" placeholder="" name="description" ng-model="restaurante.Nome" required />
+                </li>
+                <li class="item item-input item-stacked-label">
+                    <span class="input-label">Cozinha</span>
+                    <!--<input type="text" placeholder="" name="description" ng-model="restaurante.cozinha" required />-->
+                    <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas"></select>
+                </li>
+
+                <ion-toggle ng-model="restaurante.Visto1" toggle-class="toggle-calm">Visitado</ion-toggle>
+                <li class="item item-input item-stacked-label">
+                    <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+                </li>
+
+                <li class="item item-input item-stacked-label">
+                    <div style="float: left;width:50%;">Caio ja foi?</div>
+                    <div  ng-class="{'vo-preto': restaurante.Visto1 == true, 'vo-branco': restaurante.Visto1 != true}" style="float: left;" ng-click="setVisto(1,this,$event);"></div><br />
+                    <div style="float: left;width:50%;">Michelle ja foi?</div>
+                    <div ng-class="{'vo-preta': restaurante.Visto2 == true, 'vo-branca': restaurante.Visto2 != true}" style="float: left;" ng-click="setVisto(2,this,$event);"></div>
+                </li>
+
+
+
+                <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
+                    Adicionar
+                </ion-button>
+                <ion-button ng-show="action != 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="updateItem(restaurante)">
+                    Atualizar
+                </ion-button>
+            </ion-list>
+        </form>
+    </ion-content>
 </ion-view>

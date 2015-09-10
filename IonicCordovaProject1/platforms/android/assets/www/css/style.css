@@ -35,3 +35,49 @@
 .slide-in-right.ng-leave, .slide-in-right > .ng-leave {
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms; }
+
+/*.ionic_ratings .icon {
+  font-size:50px;
+}*/
+
+.big-star {
+  font-size:50px;
+}
+
+.mid-star {
+  font-size:25px;
+}
+
+.small-star {
+  font-size:15px;
+  color : #FFD700;
+}
+
+.ionic_ratings .read_only {
+  pointer-events:none;
+}
+
+.vo-branco {
+    background: url('../img/wapp.png') no-repeat -21px -201px;
+	width: 20px;
+	height: 20px;
+}
+
+.vo-preto {
+    background: url('../img/wapp.png') no-repeat -21px -281px;
+	width: 20px;
+	height: 20px;
+}
+
+.vo-branca {
+	background: url('../img/wapp.png') no-repeat -21px -321px;
+	width: 20px;
+	height: 20px;
+}
+
+.vo-preta {
+	background: url('../img/wapp.png') no-repeat -21px -401px;
+	width: 20px;
+	height: 20px;
+}
+
