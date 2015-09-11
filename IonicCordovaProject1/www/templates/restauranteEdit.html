@@ -8,26 +8,38 @@
 
                     <input type="text" placeholder="" name="description" ng-model="restaurante.Nome" required />
                 </li>
-                <li class="item item-input item-stacked-label">
-                    <span class="input-label">Cozinha</span>
+                <!--<li class="item item-input item-stacked-label">-->
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Cozinha
+                        </div>
+                        <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas"></select>
+                    </label>
                     <!--<input type="text" placeholder="" name="description" ng-model="restaurante.cozinha" required />-->
-                    <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas"></select>
-                </li>
+                    <!--data-ng-options="item.nome for item in cozinhas"-->
+                    <!--<select ng-model="restaurante.cozinhaObj" >
+                        <option ng-selected="selected" value="Variada" selected>Variada</option>
+                        <option value="Arabe">Arabe</option>
+                        <option value="Burger">Burger</option>
+                        <option value="Chinesa">Chinesa</option>
+                        <option value="Doces e Salgados">Doces e Salgados</option>
+                        <option value="Italiana">Italiana</option>
+                        <option value="Japonesa">Japonesa</option>
+                        <option value="Indiana">Indiana</option>
+                        <option value="Vegetariana">Vegetariana</option>
+                    </select>-->
+                <!--</li>-->
 
-                <ion-toggle ng-model="restaurante.Visto1" toggle-class="toggle-calm">Visitado</ion-toggle>
                 <li class="item item-input item-stacked-label">
                     <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
                 </li>
 
                 <li class="item item-input item-stacked-label">
                     <div style="float: left;width:50%;">Caio ja foi?</div>
-                    <div  ng-class="{'vo-preto': restaurante.Visto1 == true, 'vo-branco': restaurante.Visto1 != true}" style="float: left;" ng-click="setVisto(1,this,$event);"></div><br />
+                    <div ng-class="{'vo-preto': restaurante.Visto1 == true, 'vo-branco': restaurante.Visto1 != true}" style="float: left;" ng-click="setVisto(1,this,$event);"></div><br />
                     <div style="float: left;width:50%;">Michelle ja foi?</div>
                     <div ng-class="{'vo-preta': restaurante.Visto2 == true, 'vo-branca': restaurante.Visto2 != true}" style="float: left;" ng-click="setVisto(2,this,$event);"></div>
                 </li>
-
-
-
                 <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
                     Adicionar
                 </ion-button>

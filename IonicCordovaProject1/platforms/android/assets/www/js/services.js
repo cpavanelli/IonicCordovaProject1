@@ -77,7 +77,11 @@ angular.module('starter.services', [])
             }
             return null;
         },
-        getCozinhas: function () {
+        getCozinhas: function (returnTodas) {
+            if (!returnTodas) {
+                return cozinhas.slice(1, cozinhas.length );
+            }
+
             return cozinhas;
         },
         getCozinha: function (nome) {

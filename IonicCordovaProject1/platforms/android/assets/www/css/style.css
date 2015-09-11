@@ -1,3 +1,7 @@
+/*.pane {
+    background-color: #387ef5;
+}*/
+
 .customPopup{
   position: absolute;
   top: 0;
@@ -80,4 +84,3 @@
 	width: 20px;
 	height: 20px;
 }
-

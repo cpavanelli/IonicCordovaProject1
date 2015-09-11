@@ -5,7 +5,7 @@ angular.module('starter.controllers')
 
         $scope.popUpFilter = { Cozinha: null, Nome: null, Visto1: null, Nota: null };
         $scope.restaurantes = [{ Nome: 'Carregando...' }];
-        $scope.cozinhas = FourFactory.getCozinhas();
+        $scope.cozinhas = FourFactory.getCozinhas(true);
 
         FourFactory.getAll().then(function (_r) {
             $scope.restaurantes = _r;
@@ -81,7 +81,7 @@ angular.module('starter.controllers')
         $scope.filterExpression = function (_restaurante) {
             var valid = true;
 
-            if ($scope.popUpFilter.Nome != null && $scope.popUpFilter.Nome != '' && _restaurante.Nome.indexOf($scope.popUpFilter.Nome) < 0)
+            if ($scope.popUpFilter.Nome != null && $scope.popUpFilter.Nome != '' && _restaurante.Nome.toLowerCase().indexOf($scope.popUpFilter.Nome.toLowerCase()) < 0)
                 valid = false;
 
             if ($scope.popUpFilter.Cozinha != null && $scope.popUpFilter.Cozinha != _restaurante.Cozinha)
@@ -117,7 +117,8 @@ angular.module('starter.controllers')
 
     .controller('RestauranteEditCtrl', function ($scope, $state, $stateParams, FourFactory) {
         var id = $stateParams.restauranteId;
-        $scope.cozinhas = FourFactory.getCozinhas();
+        $scope.cozinhas = FourFactory.getCozinhas(false);
+
         var notaToAdd = null;
         
         if (id == 0)
@@ -125,6 +126,8 @@ angular.module('starter.controllers')
             $scope.action = 'add';
             $scope.ratingsObject = createRatingsObj('big-star', 3, 0, false, function (rating) { $scope.ratingsCallback(rating); });
             notaToAdd = 3;
+
+            $scope.restaurante = { cozinhaObj: FourFactory.getCozinha("Variada") };
         }
         else {
             $scope.action = 'change';
