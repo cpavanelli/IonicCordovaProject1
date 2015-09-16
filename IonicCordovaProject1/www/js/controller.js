@@ -126,11 +126,11 @@ angular.module('starter.controllers')
             $scope.action = 'add';
             $scope.ratingsObject = createRatingsObj('big-star', 3, 0, false, function (rating) { $scope.ratingsCallback(rating); });
             notaToAdd = 3;
-
-            $scope.restaurante = { cozinhaObj: FourFactory.getCozinha("Variada") };
+            $scope.restaurante = { cozinhaObj: FourFactory.getCozinha("Variada") , VistoEm : new Date() };
         }
         else {
             $scope.action = 'change';
+            
             $scope.restaurante = FourFactory.get(id);
             $scope.restaurante.cozinhaObj = FourFactory.getCozinha($scope.restaurante.Cozinha);
 
@@ -144,7 +144,6 @@ angular.module('starter.controllers')
             restaurante.Nota = notaToAdd;
             restaurante.Visto1 = $('.vo-preto').length > 0;
             restaurante.Visto2 = $('.vo-preta').length > 0;
-
 
             FourFactory.add(restaurante);
             

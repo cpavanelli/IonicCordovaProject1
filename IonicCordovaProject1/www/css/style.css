@@ -84,3 +84,10 @@
 	width: 20px;
 	height: 20px;
 }
+
+.test
+{
+padding-left:0px !important;
+direction:ltr !important;
+position:unset !important;
+}

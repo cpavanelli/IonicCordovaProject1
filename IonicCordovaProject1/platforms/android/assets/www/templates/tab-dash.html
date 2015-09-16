@@ -1,26 +1,30 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Upcomming events</div>
-      <div class="item item-body">
-        <div>
-          Event X - Tomorrow at 22:22
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Recent Items added</div>
-      <div class="item item-body">
+      <div class="item item-divider">Recentemente adicionados</div>
+      <div class="item item-body" ng-repeat="item in dashItems">
           <div>
-              Restaurant xxx added
+              {{item.Nome}}
           </div>
-        <div>
-            Movie y added
-        </div>
-          <div>
-            Tv show x added
+          <div ng-hide="item.Registrado == null">
+                Adicionado em: {{item.Registrado.getDate()}}/{{item.Registrado.getMonth()+1}}/{{item.Registrado.getFullYear()}} - {{("0" + item.Registrado.getHours()).slice(-2)}}:{{("0" + item.Registrado.getMinutes()).slice(-2)}}
+
           </div>
       </div>
     </div>
+      <div class="list card">
+          <div class="item item-divider">Proximos eventos</div>
+
+
+          
+          <div class="item item-body"  ng-repeat="event in nextEvents">
+              <div>
+                  {{event.Nome}}
+              </div>
+              <div ng-hide="event.Registrado == null">
+                  {{event.Dia}} {{("0" + event.Quando.getHours()).slice(-2)}}:{{("0" + event.Quando.getMinutes()).slice(-2)}} - {{event.Quando.getDate()}}/{{event.Quando.getMonth()+1}}/{{event.Quando.getFullYear()}}
+              </div>
+          </div>
+      </div>
   </ion-content>
 </ion-view>

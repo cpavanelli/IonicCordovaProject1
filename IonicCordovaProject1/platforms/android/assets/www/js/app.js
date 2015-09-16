@@ -211,3 +211,11 @@ function ionicRatings() {
         }
     }
 }
+
+
+//.config(["$httpProvider", function ($httpProvider) {
+//    $httpProvider.defaults.transformResponse.push(function (responseData) {
+//        convertDateStringsToDates(responseData);
+//        return responseData;
+//    });
+//}])

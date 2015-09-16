@@ -1,8 +1,8 @@
 angular.module('starter.services', [])
 
 .factory('FourFactory', function ($http, $timeout, $q) {
-    //var server = "http://localhost:1637/";
-    var server = "http://micawcf.azurewebsites.net/";
+    var server = "http://localhost:1637/";
+    //var server = "http://micawcf.azurewebsites.net/";
     //var server = "http://testeapp2.azurewebsites.net/";
     var restaurantes = [{ Nome: 'Carregando...' }];
 
@@ -24,12 +24,16 @@ angular.module('starter.services', [])
             return $http.get(server + "MicaService.svc/Restaurantes")
                   .then(function (result) {
                       restaurantes = result.data
+
+                      jQuery.each(restaurantes, function (index, value) {
+                          parseDateTimeFromServer(this);
+                      });
                       return restaurantes;
                   });
         },
         remove: function (restaurante) {
             restaurantes.splice(restaurantes.indexOf(restaurante), 1);
-
+            parseDateTimeFromJS(restaurante);
             $.ajax({
                 type: "POST",
                 url: server + "MicaService.svc/DeleteRestaurante",
@@ -40,11 +44,14 @@ angular.module('starter.services', [])
             });
         },
         add: function (restaurante) {
+            var insertRestaurante = jQuery.extend(true, {}, restaurante);
+            parseDateTimeFromJS(insertRestaurante);
+
 
             $.ajax({
                 type: "POST",
                 url: server + "MicaService.svc/SaveRestaurante/0",
-                data: JSON.stringify(restaurante),
+                data: JSON.stringify(insertRestaurante),
                 async: false,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -56,11 +63,13 @@ angular.module('starter.services', [])
             });
         },
         update: function (restaurante) {
+            var insertRestaurante = jQuery.extend(true, {}, restaurante);
+            parseDateTimeFromJS(insertRestaurante);
 
             $.ajax({
                 type: "POST",
                 url: server + "MicaService.svc/SaveRestaurante/0",
-                data: JSON.stringify(restaurante),
+                data: JSON.stringify(insertRestaurante),
                 async: false,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -71,7 +80,7 @@ angular.module('starter.services', [])
         },
         get: function (restauranteId) {
             for (var i = 0; i < restaurantes.length; i++) {
-                if (restaurantes[i].ID === parseInt(restauranteId)) {
+                if (restaurantes[i].ID == restauranteId) {
                     return restaurantes[i];
                 }
             }
@@ -79,7 +88,7 @@ angular.module('starter.services', [])
         },
         getCozinhas: function (returnTodas) {
             if (!returnTodas) {
-                return cozinhas.slice(1, cozinhas.length );
+                return cozinhas.slice(1, cozinhas.length);
             }
 
             return cozinhas;
@@ -176,6 +185,34 @@ angular.module('starter.services', [])
         }
 
     };
+})
+
+.service('DashService', function ($http) {
+    var server = "http://localhost:1637/";
+
+    this.getRecent = function () {
+        return $http.get(server + "MicaService.svc/DashItems")
+              .then(function (result) {
+                  dashItems = result.data
+
+                  jQuery.each(dashItems, function (index, value) {
+                      parseDateTimeFromServer(this);
+                  });
+                  return dashItems;
+              });
+    }
+
+    this.getNextEvents = function () {
+        return $http.get(server + "MicaService.svc/GetNextEvents")
+              .then(function (result) {
+                  nextEvents = result.data
+
+                  jQuery.each(nextEvents, function (index, value) {
+                      parseDateTimeFromServer(this);
+                  });
+                  return nextEvents;
+              });
+    }
 })
 
 ;
