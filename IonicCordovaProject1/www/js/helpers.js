@@ -1,4 +1,6 @@
-﻿// ratings object helper
+﻿var server = "http://micawcf.azurewebsites.net/";
+
+// ratings object helper
 function createRatingsObj(cssStar, _rating, _minRating, _readOnly, _callback)
 {
     return {
