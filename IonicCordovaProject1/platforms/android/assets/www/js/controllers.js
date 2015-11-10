@@ -5,14 +5,26 @@ angular.module('starter.controllers', [])
     $scope.nextEvents = [{ Nome: 'Carregando...' }];
     
 
+    $scope.refreshDash = function () {
+        DashService.getRecent().then(function (_d) {
+            $scope.dashItems = _d;
+        });
 
-    DashService.getRecent().then(function (_d) {
-        $scope.dashItems = _d;
-    });
+        DashService.getNextEvents().then(function (_e) {
+            $scope.nextEvents = _e;
+        });
 
-    DashService.getNextEvents().then(function (_e) {
-        $scope.nextEvents = _e;
-    });
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+
+    $scope.getLink = function (_item) {
+        if (_item.IsRestaurante) {
+            return "#/tab/restaurante/" + _item.ID
+        }
+    }
+
+    $scope.refreshDash();
+    
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {

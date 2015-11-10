@@ -6,7 +6,6 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
-
             <label class="item item-input item-select">
                 <div class="input-label">
                     Cozinha
@@ -25,7 +24,7 @@
             </li>
 
 
-            <ion-toggle ng-model="filterVisitado" toggle-class="toggle-calm" ng-change="visitadoChange(filterVisitado);">Nao visitado</ion-toggle> <br />
+            <ion-toggle ng-model="filterVisitado" toggle-class="toggle-calm" ng-change="visitadoChange(filterVisitado);">Nao fomos</ion-toggle> <br />
 
 
             <ion-button class="button button-assertive button-block" ng-click="filterNome='';filterCozinha.nome='Todas';filterVisitado=false;clearFilters();">Limpar</ion-button>

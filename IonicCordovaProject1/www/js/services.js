@@ -1,9 +1,6 @@
 angular.module('starter.services', [])
 
 .factory('FourFactory', function ($http, $timeout, $q) {
-    //var server = "http://localhost:1637/";
-    //var server = "http://micawcf.azurewebsites.net/";
-    //var server = "http://testeapp2.azurewebsites.net/";
     var restaurantes = [{ Nome: 'Carregando...' }];
 
     var cozinhas = [

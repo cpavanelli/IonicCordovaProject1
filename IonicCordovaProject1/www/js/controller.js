@@ -6,7 +6,7 @@ angular.module('starter.controllers')
         $scope.popUpFilter = { Cozinha: null, Nome: null, Visto1: null, Nota: null };
         $scope.restaurantes = [{ Nome: 'Carregando...' }];
         $scope.cozinhas = FourFactory.getCozinhas(true);
-
+        
         FourFactory.getAll().then(function (_r) {
             $scope.restaurantes = _r;
         });
@@ -87,10 +87,10 @@ angular.module('starter.controllers')
             if ($scope.popUpFilter.Cozinha != null && $scope.popUpFilter.Cozinha != _restaurante.Cozinha)
                 valid = false;
             //|| $scope.popUpFilter.Visto1 != _restaurante.Visto2
-            if ($scope.popUpFilter.Visto1 != null && $scope.popUpFilter.Visto1 != _restaurante.Visto1 ) 
+            if ($scope.popUpFilter.Visto1 != null && (_restaurante.Visto1 != $scope.popUpFilter.Visto1 || _restaurante.Visto2 != $scope.popUpFilter.Visto1))
                 valid = false;
 
-            if ($scope.popUpFilter.Nota != null && $scope.popUpFilter.Nota != 0 && $scope.popUpFilter.Nota > _restaurante.Nota)
+            if ($scope.popUpFilter.Nota != null && $scope.popUpFilter.Nota != 0 && $scope.popUpFilter.Nota != _restaurante.Nota)
                 valid = false;
 
 
@@ -115,16 +115,18 @@ angular.module('starter.controllers')
     })
 
 
-    .controller('RestauranteEditCtrl', function ($scope, $state, $stateParams, FourFactory) {
+    .controller('RestauranteEditCtrl', function ($scope, $state, $stateParams, FourFactory, $ionicModal, $ionicLoading) {
         var id = $stateParams.restauranteId;
         $scope.cozinhas = FourFactory.getCozinhas(false);
+        //$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+        
 
         var notaToAdd = null;
         
         if (id == 0)
         {
             $scope.action = 'add';
-            $scope.ratingsObject = createRatingsObj('big-star', 3, 0, false, function (rating) { $scope.ratingsCallback(rating); });
+            $scope.ratingsObject = createRatingsObj('big-star', 0, 0, false, function (rating) { $scope.ratingsCallback(rating); });
             notaToAdd = 3;
             $scope.restaurante = { cozinhaObj: FourFactory.getCozinha("Variada") , VistoEm : new Date() };
         }
@@ -152,7 +154,7 @@ angular.module('starter.controllers')
         };
 
         $scope.updateItem = function (restaurante) {
-
+            alert($scope.restaurante.Localizacao);
             restaurante.Cozinha = restaurante.cozinhaObj.id;
             restaurante.Nota = notaToAdd;
             
@@ -183,8 +185,128 @@ angular.module('starter.controllers')
             }
         };
 
+     
         
 
+        // MAPSSSSSS
+
+
+           // Map Modal Code
+        $ionicModal.fromTemplateUrl('templates/map.html', {
+            scope: $scope,
+            animation: 'slide-in-right',
+            cssClass: 'customPopup'
+        }).then(function (modal) { $scope.modal = modal; });
+
+
+        $scope.openLocalidade = function () {
+            $scope.modal.show().then(function () {
+
+                $scope.centerOnMe();
+            });
+        };
+
+        $scope.closeModal = function () {
+            $scope.modal.hide();
+        };
+
+        $scope.cancelLocalidade = function () {
+            $scope.restaurante.Localizacao = '';
+            $scope.modal.hide();
+        };
+        
+        $scope.okLocalidade = function () {
+            
+            $scope.restaurante.Localizacao = 'teste doido';
+            
+
+            $scope.modal.hide();
+        };
+
+
+        navigator.geolocation.getCurrentPosition(function (pos) {
+          
+            $scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 8 };
+          
+        }, function (error) {
+            alert('Unable to get location: ' + error.message);
+        });
+
+
+        $scope.setMarker = function (lat, long) {
+            $scope.marker = {
+                id: 0,
+                coords: {
+                    latitude: lat,
+                    longitude: long
+                },
+                options: { draggable: true },
+                events: {
+                    dragend: function (marker, eventName, args) {
+
+                        alert('Sua latitude eh: ' + $scope.marker.coords.latitude + ' E sua longitude eh: ' + $scope.marker.coords.longitude);
+
+                        $scope.marker.options = {
+                            draggable: true
+                            ,
+                            labelContent: "",
+                            labelAnchor: "100 0",
+                            labelClass: "marker-labels"
+                        };
+                    }
+                }
+            };
+        }
+
+        $scope.setMarker(-23.546985824250882, -46.634442083618666);
+
+        $scope.centerOnMe = function() {
+            if(!$scope.map) {
+                return;
+            }
+
+            $scope.loading = $ionicLoading.show({
+                content: 'Getting current location...',
+                showBackdrop: false
+            });
+            navigator.geolocation.getCurrentPosition(function (pos) {
+
+                $scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 10 };
+                $scope.setMarker(pos.coords.latitude, pos.coords.longitude);
+
+                $ionicLoading.hide();
+            }, function (error) {
+                alert('Unable to get location: ' + error.message);
+            });
+        };
+
+        var events = {
+            places_changed: function (searchBox) {
+                var place = searchBox.getPlaces();
+                if (!place || place == 'undefined' || place.length == 0) {
+                    console.log('no place data :(');
+                    return;
+                }
+
+                $scope.map = {
+                    "center": {
+                        "latitude": place[0].geometry.location.lat(),
+                        "longitude": place[0].geometry.location.lng()
+                    },
+                    "zoom": 18
+                };
+
+                $scope.setMarker(place[0].geometry.location.lat(), place[0].geometry.location.lng());
+               
+            }
+        };
+        $scope.searchbox = { template: 'searchbox.tpl.html', events: events };
+        // $scope.searchBox = { template: 'searchBox.template.html', events: searchBoxEvents, parentdiv: 'searchBoxParent' };
+
+        //$scope.searchbox = { events: events };
+
+
+        // MAPSSSSSS
 
     })
 
@@ -221,6 +343,10 @@ angular.module('starter.controllers')
 
     })
 
+    .controller('MapCtrl', function ($scope) {
+    })
+      
+
 
     .controller('EventoCtrl', function ($scope, $stateParams, EventoFactory) {
         $scope.eventos = EventoFactory.getAll();
@@ -229,6 +355,7 @@ angular.module('starter.controllers')
             EventoFactory.remove(evento);
         }
     })
+
 
 
     .controller('EventoEditCtrl', function ($scope, $state, $stateParams, EventoFactory) {

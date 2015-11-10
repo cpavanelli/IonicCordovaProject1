@@ -1,4 +1,5 @@
 ﻿var server = "http://micawcf.azurewebsites.net/";
+//var server = "http://localhost:1637/";
 
 // ratings object helper
 function createRatingsObj(cssStar, _rating, _minRating, _readOnly, _callback)
@@ -32,9 +33,6 @@ function parseDateTimeFromServer(object)
         var date = new Date(parseInt(object.Quando.substr(6)));
         object.Quando = date;
     }
-
-    
-
 }
 
 function parseDateTimeFromJS(object) {

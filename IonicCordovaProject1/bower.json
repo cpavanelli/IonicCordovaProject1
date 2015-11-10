@@ -1,0 +1,7 @@
+{
+  "name": "IonicTest",
+  "dependencies": {},
+  "devDependencies": {
+    "angular-google-maps": "~2.2.1"
+  }
+}

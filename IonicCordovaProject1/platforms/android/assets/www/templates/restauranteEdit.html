@@ -1,4 +1,4 @@
-<ion-view view-title="{{restaurante.Nome}}">
+<ion-view view-title="{{restaurante.Nome}}" hide-back-button="false">
     <ion-content class="padding">
 
         <form name="form" ng-model="restaurante">
@@ -9,9 +9,9 @@
                 </label>
                 <label class="item item-input item-select" >
                     <div class="input-label">
-                        Cozinha
+                        Cozinha:
                     </div>
-                    <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas" class="test"></select>
+                    <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas" class="cozinha-box"></select>
                 </label>
 
                 <li class="item item-input item-stacked-label">
@@ -28,7 +28,13 @@
                     <span class="input-label">Visitado Em:</span>
                     <input type="date" ng-model="restaurante.VistoEm">
                 </label>
-
+                <label class="item item-input">
+                    <span class="input-label">Detalhes:</span>
+                    <textarea name="comment" id="comment-textarea" ng-model="restaurante.Detalhes" style="width:60% !important;" ></textarea>
+                </label>
+                <ion-button class="button button-block button-positive" ng-click="openLocalidade();">
+                    Localidade
+                </ion-button>
                 <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
                     Adicionar
                 </ion-button>
