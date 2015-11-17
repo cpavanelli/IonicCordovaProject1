@@ -1,0 +1,25 @@
+﻿<ion-modal-view >
+    <ion-header-bar>
+        <h1 class="title">Localidade Edit</h1>
+    </ion-header-bar>
+    <ion-content>
+        
+        <script type="text/ng-template" id="searchbox.tpl.html">
+            <input type="text" placeholder="Search Box" style="width:60%;">
+        </script>
+
+
+        <ui-gmap-google-map center='map.center' zoom='map.zoom' data-tap-disabled="true">
+            <ui-gmap-search-box template="searchbox.template" events="searchbox.events"  position="BOTTOM_RIGHT"></ui-gmap-search-box>
+            <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id"></ui-gmap-marker>
+            </ui-gmap-google-map>
+        <button class="button button-full button-positive" ng-click="okLocalidade();" >
+            OK
+        </button>
+        <ion-button class="button button-assertive button-block" ng-click="cancelLocalidade();">
+            Cancelar
+        </ion-button>
+        <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
+        
+    </ion-content>
+</ion-modal-view>

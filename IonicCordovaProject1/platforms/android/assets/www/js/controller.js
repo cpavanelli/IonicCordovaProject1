@@ -154,7 +154,6 @@ angular.module('starter.controllers')
         };
 
         $scope.updateItem = function (restaurante) {
-            alert($scope.restaurante.Localizacao);
             restaurante.Cozinha = restaurante.cozinhaObj.id;
             restaurante.Nota = notaToAdd;
             
@@ -186,19 +185,20 @@ angular.module('starter.controllers')
         };
 
         // MAPSSSSSS
-        
+
 
            // Map Modal Code
-        $ionicModal.fromTemplateUrl('templates/map.html', {
+        $ionicModal.fromTemplateUrl('templates/mapEdit.html', {
             scope: $scope,
             animation: 'slide-in-right',
             cssClass: 'customPopup'
-        }).then(function (modal) { $scope.modal = modal; });
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
 
 
         $scope.openLocalidade = function () {
             $scope.modal.show().then(function () {
-
 
                 if($scope.restaurante.Localizacao == null)
                     $scope.centerOnMe();
@@ -223,16 +223,6 @@ angular.module('starter.controllers')
             $scope.restaurante.Localizacao = $scope.marker.coords.latitude + '|' + $scope.marker.coords.longitude;
             $scope.modal.hide();
         };
-
-
-        //navigator.geolocation.getCurrentPosition(function (pos) {
-          
-        //    $scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 8 };
-          
-        //}, function (error) {
-        //    alert('Unable to get location: ' + error.message);
-        //});
-        //$scope.setMarker(-23.546985824250882, -46.634442083618666);
 
         $scope.setMarker = function (lat, long) {
             $scope.marker = {
@@ -262,18 +252,12 @@ angular.module('starter.controllers')
         
 
         $scope.centerOnMe = function() {
-            //if(!$scope.map) {
-            //    return;
-            //}
-
             $scope.loading = $ionicLoading.show({
                 content: 'Getting current location...',
                 showBackdrop: false
             });
             navigator.geolocation.getCurrentPosition(function (pos) {
 
-                //$scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 10 };
-                //$scope.setMarker(pos.coords.latitude, pos.coords.longitude);
                 $scope.setMapCenterAndMarker(pos.coords.latitude, pos.coords.longitude);
 
                 $ionicLoading.hide();
@@ -310,12 +294,11 @@ angular.module('starter.controllers')
             }
         };
         $scope.searchbox = { template: 'searchbox.tpl.html', events: events };
-        // $scope.searchBox = { template: 'searchBox.template.html', events: searchBoxEvents, parentdiv: 'searchBoxParent' };
-
-        //$scope.searchbox = { events: events };
-
+ 
 
         // MAPSSSSSS
+
+    
 
     })
 

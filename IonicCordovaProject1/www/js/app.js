@@ -70,15 +70,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
       })
 
-              .state('tab.media', {
-                  url: '/media',
-                  views: {
-                      'tab-media': {
-                          templateUrl: 'templates/tab-media.html',
-                          controller: 'MediaCtrl'
-                      }
-                  }
-              })
+        .state('tab.media', {
+            url: '/media',
+            views: {
+                'tab-media': {
+                    templateUrl: 'templates/tab-media.html',
+                    controller: 'MediaCtrl'
+                }
+            }
+        })
 
       .state('tab.mediaEdit', {
           url: '/media/:mediaId',
@@ -90,15 +90,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
       })
 
-              .state('tab.evento', {
-                  url: '/evento',
-                  views: {
-                      'tab-evento': {
-                          templateUrl: 'templates/tab-evento.html',
-                          controller: 'EventoCtrl'
-                      }
-                  }
-              })
+        .state('tab.evento', {
+            url: '/evento',
+            views: {
+                'tab-evento': {
+                    templateUrl: 'templates/tab-evento.html',
+                    controller: 'EventoCtrl'
+                }
+            }
+        })
 
       .state('tab.eventoEdit', {
           url: '/evento/:eventoId',
@@ -110,10 +110,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
       })
 
-     .state('locationPicker', {
-         url: "/map",
-         templateUrl: "templates/map.html"
-     })
+  .state('tab.mapa', {
+      url: '/mapa',
+      views: {
+          'tab-mapa': {
+              templateUrl: 'templates/map.html',
+              controller: 'MapaCtrl'
+          }
+      }
+  })
 
     .state('tab.account', {
         url: '/account',
@@ -193,7 +198,7 @@ function ionicRatings() {
                 scope.rating = _rating;
                 scope.prevRating = _rating;
             };
-            
+
             scope.ratingsObj.setRating = scope.setRating;
 
             //Called when he user un clicks on the rating
