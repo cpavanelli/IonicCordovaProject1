@@ -185,11 +185,8 @@ angular.module('starter.controllers')
             }
         };
 
-     
-        
-
         // MAPSSSSSS
-
+        
 
            // Map Modal Code
         $ionicModal.fromTemplateUrl('templates/map.html', {
@@ -202,7 +199,13 @@ angular.module('starter.controllers')
         $scope.openLocalidade = function () {
             $scope.modal.show().then(function () {
 
-                $scope.centerOnMe();
+
+                if($scope.restaurante.Localizacao == null)
+                    $scope.centerOnMe();
+                else
+                {
+                    $scope.setMapCenterAndMarker($scope.restaurante.Localizacao.split('|')[0], $scope.restaurante.Localizacao.split('|')[1]);
+                }
             });
         };
 
@@ -211,27 +214,25 @@ angular.module('starter.controllers')
         };
 
         $scope.cancelLocalidade = function () {
-            $scope.restaurante.Localizacao = '';
+            //$scope.restaurante.Localizacao = '';
             $scope.modal.hide();
         };
         
         $scope.okLocalidade = function () {
             
-            $scope.restaurante.Localizacao = 'teste doido';
-            
-
+            $scope.restaurante.Localizacao = $scope.marker.coords.latitude + '|' + $scope.marker.coords.longitude;
             $scope.modal.hide();
         };
 
 
-        navigator.geolocation.getCurrentPosition(function (pos) {
+        //navigator.geolocation.getCurrentPosition(function (pos) {
           
-            $scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 8 };
+        //    $scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 8 };
           
-        }, function (error) {
-            alert('Unable to get location: ' + error.message);
-        });
-
+        //}, function (error) {
+        //    alert('Unable to get location: ' + error.message);
+        //});
+        //$scope.setMarker(-23.546985824250882, -46.634442083618666);
 
         $scope.setMarker = function (lat, long) {
             $scope.marker = {
@@ -244,7 +245,7 @@ angular.module('starter.controllers')
                 events: {
                     dragend: function (marker, eventName, args) {
 
-                        alert('Sua latitude eh: ' + $scope.marker.coords.latitude + ' E sua longitude eh: ' + $scope.marker.coords.longitude);
+                        //alert('Sua latitude eh: ' + $scope.marker.coords.latitude + ' E sua longitude eh: ' + $scope.marker.coords.longitude);
 
                         $scope.marker.options = {
                             draggable: true
@@ -258,12 +259,12 @@ angular.module('starter.controllers')
             };
         }
 
-        $scope.setMarker(-23.546985824250882, -46.634442083618666);
+        
 
         $scope.centerOnMe = function() {
-            if(!$scope.map) {
-                return;
-            }
+            //if(!$scope.map) {
+            //    return;
+            //}
 
             $scope.loading = $ionicLoading.show({
                 content: 'Getting current location...',
@@ -271,14 +272,22 @@ angular.module('starter.controllers')
             });
             navigator.geolocation.getCurrentPosition(function (pos) {
 
-                $scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 10 };
-                $scope.setMarker(pos.coords.latitude, pos.coords.longitude);
+                //$scope.map = { center: { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, zoom: 10 };
+                //$scope.setMarker(pos.coords.latitude, pos.coords.longitude);
+                $scope.setMapCenterAndMarker(pos.coords.latitude, pos.coords.longitude);
 
                 $ionicLoading.hide();
             }, function (error) {
                 alert('Unable to get location: ' + error.message);
             });
         };
+
+        $scope.setMapCenterAndMarker = function(lat, long)
+        {
+            $scope.map = { center: { latitude: lat, longitude: long }, zoom: 15 };
+            $scope.setMarker(lat, long);
+
+        }
 
         var events = {
             places_changed: function (searchBox) {

@@ -3,16 +3,16 @@
 
         <form name="form" ng-model="restaurante">
             <ion-list>
-                <label class="item item-input">
+                <div class="item item-input">
                     <span class="input-label">Nome:</span>
                     <input type="text" placeholder="" name="description" ng-model="restaurante.Nome" required />
-                </label>
-                <label class="item item-input item-select" >
+                </div>
+                <div class="item item-input item-select" >
                     <div class="input-label">
                         Cozinha:
                     </div>
                     <select ng-model="restaurante.cozinhaObj" data-ng-options="item.nome for item in cozinhas" class="cozinha-box"></select>
-                </label>
+                </div>
 
                 <li class="item item-input item-stacked-label">
                     <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
@@ -24,17 +24,22 @@
                     <div style="float: left;width:50%;">Michelle ja foi?</div>
                     <div ng-class="{'vo-preta': restaurante.Visto2 == true, 'vo-branca': restaurante.Visto2 != true}" style="float: left;" ng-click="setVisto(2,this,$event);"></div>
                 </li>
-                <label class="item item-input">
+                <div class="item item-input">
                     <span class="input-label">Visitado Em:</span>
                     <input type="date" ng-model="restaurante.VistoEm">
-                </label>
-                <label class="item item-input">
+                </div>
+                <div class="item item-input">
                     <span class="input-label">Detalhes:</span>
                     <textarea name="comment" id="comment-textarea" ng-model="restaurante.Detalhes" style="width:60% !important;" ></textarea>
-                </label>
-                <ion-button class="button button-block button-positive" ng-click="openLocalidade();">
-                    Localidade
-                </ion-button>
+                </div>
+                <div class="item item-input">
+                    <span class="input-label">Localidade:</span>
+                    <div >
+                        <ion-button class="button ion-paper-airplane" ng-click="openLocalidade();"></ion-button>
+                    </div>
+                </div>
+                
+
                 <ion-button ng-show="action == 'add'" ng-init="saveEmpty(form)" class="button button-block button-positive" ng-click="addItem(restaurante)">
                     Adicionar
                 </ion-button>
